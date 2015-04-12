@@ -1,6 +1,6 @@
 var canvi = 1;
 PFont font;                      // Declarem la font.
-PImage[] img = new PImage[4];     // Declarem l'array d'imatge.
+PImage[] img = new PImage[6];     // Declarem l'array d'imatge.
 var firsttime = true;
 
 void setup() {
@@ -9,31 +9,30 @@ void setup() {
   //stroke(255, 255, 255);
   //strokeWeight(2);
   noStroke();
-  frameRate(36); // Editant baixat FPS, al publicar 30-44-60.
+  frameRate(14); // Editant baixat FPS, al publicar 30-44-60.
 
   //font = loadFont("SnackerComic_PerosnalUseOnly.ttf");
   //font = loadFont("Snacker Comic Personal Use Only Normal.ttf");
   //font = loadFont("Snacker Comic Personal Use Only Normal");
   //font = createFont("SnackerComic_PerosnalUseOnly.ttf", true); // Creem la font. Tipus,Tamany,Antialasing.
   //font = createFont("Snacker Comic Personal Use Only Normal", true);
-  
-  //font = loadFont("Amandes Salées Normal, true");
-  
-  
-  font = createFont("Arial", true);
-  img[0] = loadImage("Jelly-Bean-Logo.png");
-  img[1] = loadImage("sugar-cube.png");
-  img[2] = loadImage("candy-wall.png"); //1468 x 408 -> 148,635 x 41,31 | 240,7887 x 66,9222
-  img[3] = loadImage("candy-wall-small.png"); //1774 x 882 -> 88,7 x 44,1
-  img[4] = loadImage("Salt.png"); //64 x 64 -> 34 x 34
 
+  //font = loadFont("Amandes Salées Normal, true");
+
+  font = createFont("Arial", true);
+  img[0] = loadImage("Jelly-Bean-Logov2.png"); // 768 x 545 -> 38,4 x 27,25  
+  img[1] = loadImage("sugar-cubev2.png"); // 128 x 117 -> 32 x 29,25
+  img[2] = loadImage("candy-wallv2.png"); // 1452 x 389 -> 145,2 x 38,9
+  img[3] = loadImage("candy-wall-smallv2.png"); //1774 x 882 -> 88,7 x 44,1
+  img[4] = loadImage("Saltv2.png"); //64 x 40 -> 38 x 24,13
+  img[5] = loadImage("candy-wallv3.png"); // 1452 x 389 -> 243,936 x 65,352
   jelly = new Jelly(width / 2, height / 2);
 }
 
 void draw() {
 
   // 1-Limits pantalla exterior.
-  fill(255, 55, 106);
+  fill(235, 5, 30);
   //Limit superior. ^ · >
   rect(0, 0, 1024, 5);
   //Limit dreta. > · ^
@@ -47,15 +46,14 @@ void draw() {
   fill(0, 255, 5);
   //rect(15, 65, 95, 45);
 
-  img[3].resize(89, 44);
-  //smooth();
-  img[4].resize(34, 34);
+  //smooth(8);
+  img[4].resize(38, 24);
 
   image(img[3], 15, 65);
   //rect(190, 65, 245, 45);
-  image(img[2], 190, 55, 241, 67); 
+  image(img[5], 190, 55); 
   //rect(495, 65, 255, 45);
-  image(img[2], 495, 55, 241, 67); 
+  image(img[5], 495, 55); 
   //rect(795, 65, 115, 45);
   image(img[2], 795, 65, 149, 41);
   //rect(865, 15, 45, 45);
@@ -74,22 +72,21 @@ void draw() {
   //rect(695, 215, 45, 45);
   image(img[3], 695, 215);
   //rect(15, 265, 435, 45);
-  image(img[2], 15, 265, 241, 67); 
-  image(img[2], 255, 265, 241, 67); 
+  image(img[5], 15, 265); 
+  image(img[5], 255, 265); 
   //rect(595, 265, 145, 45);
   image(img[2], 595, 265, 149, 41);
 
   // 3-Introducció del sucre i sal a recollir.
-  image(img[4], 35, 15);
-  image(img[4], 70, 15);
-  image(img[4], 30, 125);
-  image(img[1], 240, 133, 32, 32);
-  image(img[1], 450, 110, 32, 32);
-  image(img[1], 820, 25, 32, 32);
-  image(img[1], 705, 130, 32, 32);
-  //image(img[1], 705, 120, 32, 32);
+  image(img[4], 35, 25);
+  image(img[4], 70, 25);
+  image(img[4], 25, 125);
+  image(img[1], 240, 133);
+  image(img[1], 450, 110);
+  image(img[1], 820, 25);
+  image(img[1], 705, 130);
 
-  // 4-Creació de la pilota i crida dels seus metodes.
+  // 4-Creació de la jelly i crida dels seus metodes.
   jelly.move();
   jelly.draw();
   firsttime = false;
@@ -111,13 +108,14 @@ void released() {
 
 class Jelly {
   int x, y;
-  int radius;
+  int height, width;
   int releases = 0;
 
   Jelly(int x, int y) {
     this.x = x;
     this.y = y;
-    this.radius = 40;
+    this.height = 38;
+    this.width = 27;
   }
 
   boolean moving = false;
@@ -132,12 +130,11 @@ class Jelly {
   }
 
   boolean mouseOver(int mx, int my) {
-    return ((x - mx)*(x - mx) + (y - my)*(y - my)) <= radius*radius;
+    return ((x - mx)*(x - mx) + (y - my)*(y - my)) <= height*width;
   }
 
   void move() {
     if (moving) {
-
       this.x = mouseX;
       this.y = mouseY;
     }
@@ -162,13 +159,11 @@ class Jelly {
 
     // Posició inicial.
     if (firsttime == true) {
-      x = 150;
-      y = 88;
+      x = 130;
+      y = 70;
     }
 
-    //ellipse(x, y, radius, radius);
-    image(img[0], x, y, radius, radius);
+    image(img[0], x, y, height, width);
   }
 }
-
 

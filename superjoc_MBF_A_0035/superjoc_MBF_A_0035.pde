@@ -65,7 +65,7 @@ void draw() {
   image(img[2], 395, 145, 149, 41);
   image(img[2], 695, 165, 149, 41);
   image(img[3], 795, 115);
-  
+
 
   image(img[3], 695, 215);
   image(img[5], 15, 265); 
@@ -143,19 +143,18 @@ class Jelly {
     text("Sucres: ", 25, 425);            // Mostrar Text amb puntuació.
     text("Clicks: "+releases, 25, 455);   // Mostrar Text amb clicks.
 
-    if (moving) {
-      // noStroke();
-      fill(195, 195, 195);
-    } else {
-      //stroke(255, 255, 255);
-      //fill(0, 255, 5);
-      //fill(0, 245, 220);
-    }
-
     // Posició inicial.
     if (firsttime == true) {
       x = 130;
       y = 70;
+    }
+    
+    // Mentre està clicada
+    if (moving) {
+      //height = height;   // Redueix el tamany.
+      //width = width;     // Redueix el tamany.
+    } else {
+
     }
 
     //imageMode(CENTER);

@@ -148,13 +148,12 @@ class Jelly {
       x = 130;
       y = 70;
     }
-    
+
     // Mentre està clicada
     if (moving) {
-      //height = height;   // Redueix el tamany.
-      //width = width;     // Redueix el tamany.
+      //height = 36;   // Redueix el tamany. -5%
+      //width = 26;    // Redueix el tamany. -5%
     } else {
-
     }
 
     //imageMode(CENTER);
@@ -165,7 +164,7 @@ class Jelly {
     if (dist(5, 5, x, y)<25) {
       //background(22);
       textFont(font, 55);
-      text("HAS MORIDO! ", 25, 425);
+      text("HAS PERDIDO! ", 25, 425);
     }
   }
 }

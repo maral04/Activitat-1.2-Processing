@@ -26,7 +26,13 @@ void setup() {
   img[3] = loadImage("candy-wall-smallv2.png"); //1774 x 882 -> 88,7 x 44,1
   img[4] = loadImage("Saltv2.png"); //64 x 40 -> 38 x 24,13
   img[5] = loadImage("candy-wallv3.png"); // 1452 x 389 -> 243,936 x 65,352
-  jelly = new Jelly(width / 2, height / 2);
+
+  jelly = new Jelly(width, height);
+  sugar = new sugar();
+  candywallbigsmall = new candywallbigsmall();
+  candywallsmall = new candywallsmall();
+  salt = new salt();
+  candywallbig = new candywallbig();
 }
 
 void draw() {
@@ -50,31 +56,20 @@ void draw() {
   img[4].resize(38, 24);
 
   image(img[3], 15, 65);
-  //rect(190, 65, 245, 45);
   image(img[5], 190, 55); 
-  //rect(495, 65, 255, 45);
   image(img[5], 495, 55); 
-  //rect(795, 65, 115, 45);
   image(img[2], 795, 65, 149, 41);
-  //rect(865, 15, 45, 45);
   image(img[3], 865, 15);
 
-  //rect(80, 125, 145, 45);
   image(img[2], 75, 125, 149, 41); 
-  //rect(395, 145, 145, 45);
   image(img[2], 395, 145, 149, 41);
-  //rect(695, 165, 145, 45);
   image(img[2], 695, 165, 149, 41);
-  //rect(795, 115, 45, 45);
   image(img[3], 795, 115);
+  
 
-
-  //rect(695, 215, 45, 45);
   image(img[3], 695, 215);
-  //rect(15, 265, 435, 45);
   image(img[5], 15, 265); 
-  image(img[5], 255, 265); 
-  //rect(595, 265, 145, 45);
+  image(img[5], 260, 265); 
   image(img[2], 595, 265, 149, 41);
 
   // 3-Introducció del sucre i sal a recollir.
@@ -154,7 +149,7 @@ class Jelly {
     } else {
       //stroke(255, 255, 255);
       //fill(0, 255, 5);
-      fill(0, 245, 220);
+      //fill(0, 245, 220);
     }
 
     // Posició inicial.
@@ -163,6 +158,16 @@ class Jelly {
       y = 70;
     }
 
+    //imageMode(CENTER);
+    //imageMode(CORNERS);
     image(img[0], x, y, height, width);
+
+    // Colisió amb les parets exteriors.
+    if (dist(5, 5, x, y)<25) {
+      //background(22);
+      textFont(font, 55);
+      text("HAS MORIDO! ", 25, 425);
+    }
   }
 }
+

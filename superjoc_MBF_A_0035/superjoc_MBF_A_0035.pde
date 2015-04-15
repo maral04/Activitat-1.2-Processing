@@ -28,11 +28,13 @@ void setup() {
   img[5] = loadImage("candy-wallv3.png"); // 1452 x 389 -> 243,936 x 65,352
 
   jelly = new Jelly(width, height);
+  /*
   sugar = new sugar();
-  candywallbigsmall = new candywallbigsmall();
-  candywallsmall = new candywallsmall();
-  salt = new salt();
-  candywallbig = new candywallbig();
+   candywallbigsmall = new candywallbigsmall();
+   candywallsmall = new candywallsmall();
+   salt = new salt();
+   candywallbig = new candywallbig();
+   */
 }
 
 void draw() {
@@ -72,14 +74,16 @@ void draw() {
   image(img[5], 260, 265); 
   image(img[2], 595, 265, 149, 41);
 
+  /*
   // 3-Introducció del sucre i sal a recollir.
-  image(img[4], 35, 25);
-  image(img[4], 70, 25);
-  image(img[4], 25, 125);
-  image(img[1], 240, 133);
-  image(img[1], 450, 110);
-  image(img[1], 820, 25);
-  image(img[1], 705, 130);
+   image(img[4], 35, 25);
+   image(img[4], 70, 25);
+   image(img[4], 25, 125);
+   image(img[1], 240, 133);
+   image(img[1], 450, 110);
+   image(img[1], 820, 25);
+   image(img[1], 705, 130);
+   */
 
   // 4-Creació de la jelly i crida dels seus metodes.
   jelly.move();
@@ -140,31 +144,38 @@ class Jelly {
     rect(15, 400, 210, 65);               // Faig desapareixer el text amb un rectangle a sobre...
     textFont(font, 22);                   // Especificar la font a ser usada. 
     fill(165);                            // Especificar font color.
-    text("Sucres: ", 25, 425);            // Mostrar Text amb puntuació.
+    //text("Sucres: ", 25, 425);            // Mostrar Text amb puntuació.
+    text(mouseX+" "+mouseY, 25, 425);  
     text("Clicks: "+releases, 25, 455);   // Mostrar Text amb clicks.
 
     // Posició inicial.
     if (firsttime == true) {
-      x = 130;
-      y = 70;
+      x = 145;
+      y = 85;
     }
 
+    /*
     // Mentre està clicada
     if (moving) {
       //height = 36;   // Redueix el tamany. -5%
       //width = 26;    // Redueix el tamany. -5%
     } else {
     }
-
+    */
     //imageMode(CENTER);
     //imageMode(CORNERS);
-    image(img[0], x, y, height, width);
+    image(img[0], x-15, y-15, height, width);
 
     // Colisió amb les parets exteriors.
-    if (dist(5, 5, x, y)<25) {
-      //background(22);
-      textFont(font, 55);
-      text("HAS PERDIDO! ", 25, 425);
+    if (y < dist(0, 0, 0, 21) 
+      || x < dist(0, 0, 21, 0)
+      || y > dist(0, 480, 0, 18)
+      || x > dist(1024, 0, 29, 0)
+      ) {
+      text("HAS PERDIDO! ", 40, 375);
+    } else {
+      fill(235, 235, 235);
+      rect(30, 345, 185, 45);
     }
   }
 }

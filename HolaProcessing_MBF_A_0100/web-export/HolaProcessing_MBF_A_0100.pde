@@ -2,6 +2,7 @@ var canvi = 1;
 PFont font;                      // Declarem la font.
 PImage[] img = new PImage[6];     // Declarem l'array d'imatge.
 var firsttime = true;
+var sucres = 0;
 
 void setup() {
   size(1024, 480);
@@ -28,6 +29,8 @@ void setup() {
   img[5] = loadImage("candy-wallv3.png"); // 1452 x 389 -> 243,936 x 65,352
 
   jelly = new Jelly(width, height);
+  parets = new parets();
+
   /*
   sugar = new sugar();
    candywallbigsmall = new candywallbigsmall();
@@ -40,6 +43,29 @@ void setup() {
 void draw() {
 
   // 1-Limits pantalla exterior.
+  limitsExteriors();
+
+  // 2-Limits laberint interior.
+  limitsInteriors();
+
+  /*
+  // 3-Introducció del sucre i sal a recollir.
+   image(img[4], 35, 25);
+   image(img[4], 70, 25);
+   image(img[4], 25, 125);
+   image(img[1], 240, 133);
+   image(img[1], 450, 110);
+   image(img[1], 820, 25);
+   image(img[1], 705, 130);
+   */
+
+  // 4-Creació de la jelly i crida dels seus metodes.
+  jelly.move();
+  jelly.draw();
+  firsttime = false;
+}
+
+void limitsExteriors() {
   fill(235, 5, 30);
   //Limit superior. ^ · >
   rect(0, 0, 1024, 5);
@@ -49,8 +75,9 @@ void draw() {
   rect(0, 480, 1024, -5);
   //Limit esquerra. < · ^
   rect(0, 0, 5, 480);
+}
 
-  // 2-Limits laberint interior.
+void limitsInteriors() {
   fill(0, 255, 5);
   //rect(15, 65, 95, 45);
 
@@ -73,22 +100,6 @@ void draw() {
   image(img[5], 15, 265); 
   image(img[5], 260, 265); 
   image(img[2], 595, 265, 149, 41);
-
-  /*
-  // 3-Introducció del sucre i sal a recollir.
-   image(img[4], 35, 25);
-   image(img[4], 70, 25);
-   image(img[4], 25, 125);
-   image(img[1], 240, 133);
-   image(img[1], 450, 110);
-   image(img[1], 820, 25);
-   image(img[1], 705, 130);
-   */
-
-  // 4-Creació de la jelly i crida dels seus metodes.
-  jelly.move();
-  jelly.draw();
-  firsttime = false;
 }
 
 void mousePressed() {
@@ -139,43 +150,67 @@ class Jelly {
     }
   }
 
-  void draw() {
+  void caixaText() {
     fill(250, 250, 250);                  // Color de background.
-    rect(15, 400, 210, 65);               // Faig desapareixer el text amb un rectangle a sobre...
+    rect(15, 365, 210, 100);              // Faig desapareixer el text amb un rectangle a sobre...
     textFont(font, 22);                   // Especificar la font a ser usada. 
     fill(165);                            // Especificar font color.
-    //text("Sucres: ", 25, 425);            // Mostrar Text amb puntuació.
-    text(mouseX+" "+mouseY, 25, 425);  
+    text(mouseX+" "+mouseY, 25, 395);     // Mostra Text amb Coordenades.
+    //text("Sucres: "+sucres, 25, 425);            // Mostrar Text amb puntuació.         
     text("Clicks: "+releases, 25, 455);   // Mostrar Text amb clicks.
+  }
 
+  void draw() {
     // Posició inicial.
     if (firsttime == true) {
+      caixaText();
       x = 145;
       y = 85;
+      image(img[0], x-15, y-15, height, width);
     }
 
-    /*
     // Mentre està clicada
     if (moving) {
+      background(235, 235, 235);
+      limitsExteriors();
+      limitsInteriors();
+      caixaText();
+
       //height = 36;   // Redueix el tamany. -5%
       //width = 26;    // Redueix el tamany. -5%
-    } else {
-    }
-    */
-    //imageMode(CENTER);
-    //imageMode(CORNERS);
-    image(img[0], x-15, y-15, height, width);
 
-    // Colisió amb les parets exteriors.
-    if (y < dist(0, 0, 0, 21) 
-      || x < dist(0, 0, 21, 0)
-      || y > dist(0, 480, 0, 18)
-      || x > dist(1024, 0, 29, 0)
-      ) {
-      text("HAS PERDIDO! ", 40, 375);
-    } else {
-      fill(235, 235, 235);
-      rect(30, 345, 185, 45);
+
+      //imageMode(CENTER);
+      //imageMode(CORNERS);
+      image(img[0], x-15, y-15, height, width);
+
+      // Colisió amb les parets exteriors.
+      if (y < dist(0, 0, 0, 21) 
+        || x < dist(0, 0, 21, 0)
+        || y > dist(0, 480, 0, 18)
+        || x > dist(1024, 0, 29, 0)
+        ) {
+        text("HAS XOCAT! ", 340, 375);
+      } else {
+        fill(235, 235, 235);
+        rect(330, 345, 185, 45);
+      }
+      // Si hi ha colisió d'img[0] amb img[1] aumenta el tamany de Jelly. Desapareix img[1].
+      // Si hi ha colisió d'img[0] amb img[4] redueix el tamany de Jelly. Desapareix img[4].
+      /*if((x > dist(450, 110, 0, 0) && x < dist(480, 140, 0, 0))){
+       //x < dist(70, 25, 0, 0) && x > 
+       sucres++;
+       image(img[0], x-15, y-15, height, width);
+       //when image enters image radius
+       
+       }
+       else{
+       if((x > dist(35, 25, 0, 0) && x < dist(70, 50, 0, 0)) ||
+       (x > dist(72, 25, 0, 0) && x < dist(109, 50, 0, 0))
+       ){
+       sucres--;
+       }
+       }*/
     }
   }
 }

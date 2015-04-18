@@ -62,7 +62,7 @@ void draw() {
   // 4-Creació de la jelly i crida dels seus metodes.
   jelly.move();
   jelly.draw();
-  firsttime = false;
+  jelly.drawjelly();
 }
 
 void limitsExteriors() {
@@ -112,9 +112,11 @@ void mouseReleased() {
   jelly.mouseReleased();
 }
 
+/*
 void released() {
-  jelly.released();
-}
+ jelly.released();
+ }
+ */
 
 class Jelly {
   int x, y;
@@ -160,13 +162,18 @@ class Jelly {
     text("Clicks: "+releases, 25, 455);   // Mostrar Text amb clicks.
   }
 
+  void drawjelly() {
+    image(img[0], x-15, y-15, height, width);
+  }
+
   void draw() {
     // Posició inicial.
     if (firsttime == true) {
       caixaText();
       x = 145;
       y = 85;
-      image(img[0], x-15, y-15, height, width);
+      drawjelly();
+      firsttime = false;
     }
 
     // Mentre està clicada
@@ -182,7 +189,7 @@ class Jelly {
 
       //imageMode(CENTER);
       //imageMode(CORNERS);
-      image(img[0], x-15, y-15, height, width);
+      drawjelly();
 
       // Colisió amb les parets exteriors.
       if (y < dist(0, 0, 0, 21) 
